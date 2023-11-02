@@ -14,14 +14,15 @@ class CategoriesScreen extends StatelessWidget {
   final void Function(Meal meal) onToggleFAvorite;
 
   void _selectedCategory(context, Category category) {
+    final filteredMeals = dummyMeals
+        .where(
+          (meal) => meal.categories.contains(category.id),
+        )
+        .toList();
     // Navigator.push(context, route) to samo co Navigator.of(context).push(route)
     Navigator.of(context).push(MaterialPageRoute(
       builder: (ctx) => MealsScreen(
-        meals: dummyMeals
-            .where(
-              (meal) => meal.categories.contains(category.id),
-            )
-            .toList(),
+        meals: filteredMeals,
         title: category.title,
         onToggleFAvorite: onToggleFAvorite,
       ),
